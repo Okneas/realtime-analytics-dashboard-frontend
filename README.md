@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Realtime Analytics Dashboard — Frontend
 
-## Getting Started
+Интерактивный дашборд для отслеживания рыночных данных в реальном времени. Криптовалюты (Bybit) и акции (Yahoo Finance) — в едином интерфейсе с drag-and-drop редактором досок.
 
-First, run the development server:
+## 🛠 Стек
+
+| Компонент | Технология |
+|-----------|------------|
+| Фреймворк | Next.js 16 (App Router) |
+| Язык | TypeScript |
+| Стили | Tailwind CSS v4 |
+| Серверное состояние | TanStack Query v5 |
+| Формы | react-hook-form + Zod |
+| Headless UI | Radix UI Primitives |
+| Графики | Recharts |
+| Слайдеры | Swiper |
+| Сетка дашборда | react-grid-layout |
+| Command palette | cmdk |
+| Иконки | lucide-react |
+| HTTP-клиент | axios |
+
+## 🚀 Быстрый старты
+
+### Требования
+
+- Node.js 20+
+- npm / pnpm / yarn
+- Запущенный бэкенд (см. `backend/README.md`)
+
+### 1. Установка
+
+```bash
+git clone <repo-url>
+cd frontend
+npm install
+```
+
+### 2. Переменные окружения
+
+```bash
+cp .env.example .env.local
+```
+
+### 3. Запуск
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Открой [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⚙️ Переменные окружения
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Переменная | Описание |
+|------------|----------|
+| `NEXT_PUBLIC_API_URL` | URL бэкенда (например, `http://localhost:8000`) |
+| `NEXT_PUBLIC_WS_URL` | URL WebSocket-эндпоинта (например, `ws://localhost:8000/ws/stream`) |
 
-## Learn More
+## 📜 Скрипты
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev      # Dev-сервер с hot-reload
+npm run build    # Продакшен-сборка
+npm run start    # Запуск собранного приложения
+npm run lint     # ESLint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🐳 Docker
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Сборка и запуск
 
-## Deploy on Vercel
+```bash
+docker build -t market-frontend .
+docker run -p 3000:3000 --env-file .env.local market-frontend
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Используется **standalone output** Next.js — минимальный образ без dev-зависимостей.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔌 Работа с бэкендом
+
+Все запросы идут на `NEXT_PUBLIC_API_URL`. Cookies отправляются автоматически благодаря `withCredentials: true` в axios instance.
+
+**CORS на бэке** должен разрешать origin фронта — это настраивается через `CORS_ORIGINS` в `.env` бэкенда.
+
+## 📝 Лицензия
+
+MIT
